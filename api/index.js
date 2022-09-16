@@ -3,13 +3,13 @@ const csrf = require("csurf");
 const bodyParser = require("body-parser");
 const express = require('express');
 const admin = require("firebase-admin");
-const Product = require('./models/product');
-const Service = require('./models/service');
+const Product = require('../models/product');
+const Service = require('../models/service');
 const path = require('path');
 const multer = require('multer');
 const fs = require('fs')
 
-const serviceAccount = require("./serviceAccountKey.json");
+const serviceAccount = require("../serviceAccountKey.json");
 const { fstat } = require("fs");
 
 admin.initializeApp({
@@ -67,7 +67,7 @@ const upload3 = multer({storage: storage3})
 const port = process.env.PORT || 3000;
 const app = express();
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static('public'))
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.json());
@@ -81,7 +81,7 @@ app.use(function (req, res, next) {
     next();
   });
 //public routes
-app.get('/', async (req, res) => {
+app.get('/api', async (req, res) => {
   const service = firestore.collection('services');
   const data = await service.get();
   const services = [];
@@ -115,17 +115,17 @@ app.get('/', async (req, res) => {
   
   
 });
-app.get('/about', (req, res) => {
+app.get('/api/about', (req, res) => {
   res.status(200).render('client/Бидний-Тухай');
 });
-app.get('/sales', (req, res) => {
+app.get('/api/sales', (req, res) => {
   res.status(200).render('client/Борлуулалт');
 });
-app.get('/contact', (req, res) => {
+app.get('/api/contact', (req, res) => {
   res.status(200).render('client/Холбоо-барих');
 });
 //admin routes
-app.get("/admin", (req, res) => {
+app.get("/api/admin", (req, res) => {
     const sessionCookie = req.cookies.session || "";
     admin
     .auth()
@@ -135,11 +135,11 @@ app.get("/admin", (req, res) => {
       res.render('admin/index')
     })
     .catch((error) => {
-      res.redirect("/login");
+      res.redirect("/api/login");
     });
     
 });
-app.get('/admin/sales', async (req, res) => {
+app.get('/api/admin/sales', async (req, res) => {
     const sessionCookie = req.cookies.session || "";
     const product = await firestore.collection('products');
         const data = await product.get();
@@ -167,12 +167,12 @@ app.get('/admin/sales', async (req, res) => {
       res.render('admin/sales', {products});
     })
     .catch((error) => {
-      res.redirect("/login");
+      res.redirect("/api/login");
     });
     
 });
 
-app.get('/admin/sales/:id', async (req, res) => {
+app.get('/api/admin/sales/:id', async (req, res) => {
     const sessionCookie = req.cookies.session || "";
     const id = req.params.id;
     const link = '../../images/bg2.jpg';
@@ -193,12 +193,12 @@ app.get('/admin/sales/:id', async (req, res) => {
       res.render('admin/product', {product , link});
     })
     .catch((error) => {
-      res.redirect("/login");
+      res.redirect("/api/login");
     });
     
 });
 
-app.get('/admin/service', async (req, res) => {
+app.get('/api/admin/service', async (req, res) => {
     const sessionCookie = req.cookies.session || "";
     const service = await firestore.collection('services');
         const data = await service.get();
@@ -224,12 +224,12 @@ app.get('/admin/service', async (req, res) => {
       res.render('admin/Нүүр', {services});
     })
     .catch((error) => {
-      res.redirect("/login");
+      res.redirect("/api/login");
     });
     
 });
 
-app.get('/admin/showcase', async (req, res) => {
+app.get('/api/admin/showcase', async (req, res) => {
     const sessionCookie = req.cookies.session || "";
     
     const service = firestore.collection('showcase').doc('nEyjlOFanwfyfYjianar');
@@ -251,7 +251,7 @@ app.get('/admin/showcase', async (req, res) => {
         res.render('admin/Санал-болгох', {showcase, images});
       })
       .catch((error) => {
-        res.redirect("/login");
+        res.redirect("/api/login");
       });
     })
     
@@ -259,7 +259,7 @@ app.get('/admin/showcase', async (req, res) => {
     
     
 });
-app.get('/admin/showcase/edit', async (req, res) => {
+app.get('/api/admin/showcase/edit', async (req, res) => {
     const sessionCookie = req.cookies.session || "";
     const service = firestore.collection('showcase').doc('nEyjlOFanwfyfYjianar');
         const data = await service.get();
@@ -279,20 +279,20 @@ app.get('/admin/showcase/edit', async (req, res) => {
       res.render('admin/Санал-болгох-засах', {showcase});
     })
     .catch((error) => {
-      res.redirect("/login");
+      res.redirect("/api/login");
     });
     
 });
-app.post('/admin/sales/product-save1', upload1.array('images', 3), (req, res) => {
+app.post('/api/admin/sales/product-save1', upload1.array('images', 3), (req, res) => {
   res.status(200)
 });
-app.post('/admin/sales/product-save2', upload1.single('images', 3),(req, res) => {
+app.post('/api/admin/sales/product-save2', upload1.single('images', 3),(req, res) => {
   res.status(200)
 });
-app.post('/admin/sales/product-save3', upload1.array('images', 5),(req, res) => {
+app.post('/api/admin/sales/product-save3', upload1.array('images', 5),(req, res) => {
   res.status(200)
 });
-app.post('/admin/showcase/upload', upload.array('images', 4), async (req, res) => {
+app.post('/api/admin/showcase/upload', upload.array('images', 4), async (req, res) => {
   fs.readdir('./images/showcase', (err, files) => {
     const path1 = './public/images/showcase/' + files[0];
     const path2 = './public/images/showcase/' + files[1];
@@ -318,10 +318,10 @@ app.post('/admin/showcase/upload', upload.array('images', 4), async (req, res) =
     console.log("Logged in:", userData.email);
     
         
-    res.redirect('/admin/showcase');
+    res.redirect('/api/admin/showcase');
   })
   .catch((error) => {
-    res.redirect("/admin/showcase");
+    res.redirect("/api/admin/showcase");
   });
   
 });
@@ -329,13 +329,13 @@ app.post('/admin/showcase/upload', upload.array('images', 4), async (req, res) =
 
 
 
-app.get("/login", function (req, res) {
+app.get("/api/login", function (req, res) {
     res.render("admin/login");
   });
 
 
 
-app.post("/sessionLogin", (req, res) => {
+app.post("/api/sessionLogin", (req, res) => {
     const idToken = req.body.idToken.toString();
   
     const expiresIn = 60 * 60 * 24 * 7 * 1000;
@@ -355,7 +355,7 @@ app.post("/sessionLogin", (req, res) => {
       );
   });
 
-  app.post("/admin/update-service", async (req, res) => {
+  app.post("/api/admin/update-service", async (req, res) => {
     const sessionCookie = req.cookies.session || "";
     const ref = firestore.collection('services');
     const data1 = {
@@ -390,13 +390,13 @@ app.post("/sessionLogin", (req, res) => {
       
     })
     .catch((error) => {
-      res.redirect("/login");
+      res.redirect("/api/login");
     });
   });
   
-  app.get("/sessionLogout", (req, res) => {
+  app.get("/api/sessionLogout", (req, res) => {
     res.clearCookie("session");
-    res.redirect("/login");
+    res.redirect("/api/login");
   });
 
 app.listen(port, () => {
