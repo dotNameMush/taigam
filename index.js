@@ -75,7 +75,7 @@ app.get('/', async (req, res) => {
             
   }
   var images = [];
-  fs.readdir('./public/images/showcase', (err, files) => {
+  fs.promises.readdir('./images/showcase', (err, files) => {
       images = files;
       res.status(200).render('client/index', {services, images, showcase});
     })
