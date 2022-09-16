@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;" lang="en"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="robots" content="noindex">
+    <title>login</title>
+    <link rel="stylesheet" href="../../css/admin/nicepage.css" media="screen">
+<link rel="stylesheet" href="../../css/admin/login.css" media="screen">
+    <script class="u-script" type="text/javascript" src="../../js/admin/jquery.js" "="" defer=""></script>
+    <script class="u-script" type="text/javascript" src="../../js/admin/nicepage.js" "="" defer=""></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js" defer ></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-auth.js" defer ></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer ></script>
+    <meta name="generator" content="Nicepage 4.17.10, taigam-altai.mn">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    
+    
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "Taigam-Admin"
+}</script>
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:title" content="login">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="website">
+  </head>
+  <body class="u-body u-xl-mode" data-lang="en">
+    <section class="u-clearfix u-section-1" id="sec-ff37">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="u-align-center u-border-2 u-border-custom-color-1 u-form u-radius-17 u-form-1">
+          <form class="u-clearfix u-form-spacing-20 u-form-vertical u-inner-form" source="custom" id="login" style="padding: 24px;">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <div class="u-form-email u-form-group">
+              <label for="name-dfc4" class="u-label">И-Мэйл</label>
+              <input type="email" placeholder="Мэйл хаягаа оруулна уу?" id="name-dfc4" name="login" class="u-border-1 u-border-custom-color-1 u-input u-input-rectangle u-radius-9 u-white u-input-1" required="required">
+            </div>
+            <div class="u-form-group">
+              <label for="email-dfc4" class="u-label">Нууц үг</label>
+              <input placeholder="Нууц үгээ бичнэ үү?" id="email-dfc4" name="password" class="u-border-1 u-border-custom-color-1 u-input u-input-rectangle u-radius-9 u-white u-input-2" required="required" maxlength="16" type="password">
+            </div>
+            <div class="u-align-left u-form-group u-form-submit">
+              <a href="#" class="u-active-white u-border-none u-btn u-btn-round u-btn-submit u-button-style u-custom-color-1 u-hover-custom-color-2 u-radius-9 u-btn-1">Submit</a>
+              <input type="submit"  class="u-form-control-hidden">
+            </div>
+            <div class="u-form-send-message u-form-send-success">Successful login</div>
+            <div class="u-form-send-error u-form-send-message" ><p id="error-message">loading</p></div>
+            <input type="hidden" value="" name="recaptchaResponse">
+          </form>
+        </div>
+      </div>
+    </section>
+    
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        const firebaseConfig = {
+          apiKey: "AIzaSyDhOQrNX1PUIk5wueAayz_3R0NBuEth-vI",
+          authDomain: "taigam-altai.firebaseapp.com",
+          projectId: "taigam-altai",
+          storageBucket: "taigam-altai.appspot.com",
+          messagingSenderId: "490510450139",
+          appId: "1:490510450139:web:eba45432cd158f1cdf7bfe",
+          measurementId: "G-CCF3B5M26K"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+
+        document
+          .getElementById("login")
+          .addEventListener("submit", (event) => {
+            event.preventDefault();
+            const login = event.target.login.value;
+            const password = event.target.password.value;
+
+            firebase
+              .auth()
+              .signInWithEmailAndPassword(login, password)
+              .then(({ user }) => {
+                return user.getIdToken().then((idToken) => {
+                  return fetch("/sessionLogin", {
+                    method: "POST",
+                    headers: {
+                      Accept: "application/json",
+                      "Content-Type": "application/json",
+                      "CSRF-Token": Cookies.get("XSRF-TOKEN"),
+                    },
+                    body: JSON.stringify({ idToken }),
+                  });
+                });
+              })
+              .then(() => {
+                return firebase.auth().signOut();
+              })
+              .then(() => {
+                window.location.assign("/admin");
+              })
+              .catch((error) => {
+                const errorMessage = error.message;
+                console.log(errorMessage)
+                document.getElementById('error-message').innerText = error.message;
+              });
+            return false;
+          });
+      });
+    </script>
+</body></html>

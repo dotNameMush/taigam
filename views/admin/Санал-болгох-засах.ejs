@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;" lang="en"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="robots" content="noindex">
+    <title>Санал болгох засах</title>
+    <link rel="stylesheet" href="../../css/admin/nicepage.css" media="screen">
+    <link rel="stylesheet" href="../../css/admin/Санал-болгох-засах.css" media="screen">
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer ></script>
+    <script class="u-script" type="text/javascript" src="../../js/admin/jquery.js" "="" defer=""></script>
+    <script class="u-script" type="text/javascript" src="../../js/admin/nicepage.js" "="" defer=""></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script>
+      $(function(){
+          $("input[type='submit']").click(function(){
+              var $fileUpload = $("input[type='file']");
+              if (parseInt($fileUpload.get(0).files.length)>4){
+                $("form").submit(function(e){
+                  e.preventDefault();
+                });
+              alert("You can only upload a maximum of 4 files");
+              location.reload();
+              } else {
+                $("form").submit
+              }
+          });    
+      });
+    </script>
+    <meta name="generator" content="Nicepage 4.17.10, taigam-altai.mn">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    
+    
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "Taigam-Admin",
+		"logo": "../../images/Taigamaltailogo.png"
+}</script>
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:title" content="Санал болгох засах">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="website">
+  </head>
+  <body class="u-body u-xl-mode" data-lang="en"><header class="u-clearfix u-header u-header" id="sec-fd46"><div class="u-clearfix u-sheet u-sheet-1">
+        <a href="https://taigam-altai.mn" class="u-image u-logo u-image-1" data-image-width="2130" data-image-height="1916">
+          <img src="../../images/Taigamaltailogo.png" class="u-logo-image u-logo-image-1">
+        </a>
+        <p class="u-custom-font u-heading-font u-text u-text-default u-text-1">Админ</p>
+        <nav class="u-menu u-menu-one-level u-offcanvas u-menu-1">
+          <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
+            <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
+              <svg class="u-svg-link" viewBox="0 0 24 24"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
+              <svg class="u-svg-content" version="1.1" id="menu-hamburger" viewBox="0 0 16 16" x="0px" y="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+</g></svg>
+            </a>
+          </div>
+          <div class="u-custom-menu u-nav-container">
+            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/admin" style="padding: 10px 20px;">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/admin/settings" style="padding: 10px 20px;">Үндсэн тохиргоо</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/sessionLogout" style="padding: 10px 20px;">Гарах</a>
+</li></ul>
+          </div>
+          <div class="u-custom-menu u-nav-container-collapse">
+            <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+              <div class="u-inner-container-layout u-sidenav-overflow">
+                <div class="u-menu-close"></div>
+                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/admin">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/admin/settings">Үндсэн тохиргоо</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/sessionLogout">Гарах</a>
+</li></ul>
+              </div>
+            </div>
+            <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+          </div>
+        </nav>
+      </div></header>
+    <section class="u-align-center u-clearfix u-section-1" id="sec-84b2">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h2 class="u-text u-text-default u-text-1" data-lang-en="Борлуулалт"><%= showcase.title %></h2>
+        <p class="u-text u-text-2" data-lang-en="​Доорхи төслүүдтэй танилцан борлуулалтын ажилтантай холбогдно уу."><%= showcase.subtitle %></p>
+        <div class="u-form u-form-1">
+          <form action="/admin/showcase/upload?_csrf=<%= csrfToken %>" method="POST" enctype="multipart/form-data" name="form" id="form" style="padding: 10px;">
+            <div class="u-form-group u-form-name">
+              
+              <label for="name-aaf5" class="u-label">Гарчиг</label>
+              <input type="text" placeholder="Гарчиг" id="name-aaf5" name="title" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="required" maxlength="30">
+            </div>
+            <div class="u-form-group u-form-message">
+              <label for="email-aaf5" class="u-label">Дэд гарчиг</label>
+              <textarea placeholder="Дэд гарчиг" id="email-aaf5" name="subtitle" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="required" maxlength="50"></textarea>
+            </div>
+            <div class="u-form-group u-form-name">
+              <label for="name-aaf5" class="u-label">Зураг</label>
+              <input type="file" placeholder="Гарчиг" id="images" accept="image/*" multiple onchange="imageController(this)" name="images" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="required" maxlength="4">
+            </div>
+            
+            <div class="u-align-left u-form-group u-form-submit">
+              <a href="#" class="u-btn u-btn-submit u-button-style">Submit</a>
+              <input type="submit" value="Submit" class="u-form-control-hidden">
+            </div>
+            
+            <div class="u-form-send-message u-form-send-success"> Thank you! Your message has been sent. </div>
+            <div class="u-form-send-error u-form-send-message"> Unable to send your message. Please fix errors then try again. </div>
+            <input type="hidden" value="" name="recaptchaResponse">
+            <input type="hidden" name="formServices" value="8a18c442b8b8ad2789ddaffb500b1fc9">
+          </form>
+        </div>
+        <div class="u-align-center u-clearfix u-group-elements u-group-elements-1">
+          <img class="u-image u-image-default u-image-1" id="img1" src="../../images/9a8f6f980a2de9673068fadbb6afb06b2aabe22e6b1c08f66e616e0c8d6351ce38bcded1d9005b2747ffb57e76b7c07a2ae33251aaffd5c02af673_1280.jpg" alt="" data-image-width="1280" data-image-height="790">
+          <img class="u-image u-image-default u-image-2" id="img2" src="../../images/9a8f6f980a2de9673068fadbb6afb06b2aabe22e6b1c08f66e616e0c8d6351ce38bcded1d9005b2747ffb57e76b7c07a2ae33251aaffd5c02af673_1280.jpg" alt="" data-image-width="1280" data-image-height="790">
+          <img class="u-image u-image-default u-image-3" id="img3" src="../../images/9a8f6f980a2de9673068fadbb6afb06b2aabe22e6b1c08f66e616e0c8d6351ce38bcded1d9005b2747ffb57e76b7c07a2ae33251aaffd5c02af673_1280.jpg" alt="" data-image-width="1280" data-image-height="790">
+          <img class="u-image u-image-default u-image-4" id="img4" src="../../images/9a8f6f980a2de9673068fadbb6afb06b2aabe22e6b1c08f66e616e0c8d6351ce38bcded1d9005b2747ffb57e76b7c07a2ae33251aaffd5c02af673_1280.jpg" alt="" data-image-width="1280" data-image-height="790">
+        </div>
+      </div>
+    </section>
+    <script>
+      
+      function imageController(input) {
+            if (input.files && input.files[0]) {
+                var reader1 = new FileReader();
+                var reader2 = new FileReader();
+                var reader3 = new FileReader();
+                var reader4 = new FileReader();
+
+                reader1.onload = function (e) {
+                    $('#img1')
+                        .attr('src', e.target.result)
+                };
+                reader2.onload = function (e) {
+                    $('#img2')
+                        .attr('src', e.target.result)
+                };
+                reader3.onload = function (e) {
+                    $('#img3')
+                        .attr('src', e.target.result)
+                };
+                reader4.onload = function (e) {
+                    $('#img4')
+                        .attr('src', e.target.result)
+                };
+
+                reader1.readAsDataURL(input.files[0]);
+                reader2.readAsDataURL(input.files[1]);
+                reader3.readAsDataURL(input.files[2]);
+                reader4.readAsDataURL(input.files[3]);
+            }
+        }
+    </script>
+  
+</body></html>
