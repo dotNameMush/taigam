@@ -21,37 +21,7 @@ const csrfMiddleware = csrf({ cookie: true });
 //file upload controller;
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'public/images/showcase')
-  },
-  filename: (req, file, cb) => {
-    console.log(file)
-    cb(null, Date.now() + path.extname(file.originalname))
-  }
-
-});
-const storage1 = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'public/images/product')
-  },
-  filename: (req, file, cb) => {
-    console.log(file)
-    cb(null, Date.now() + path.extname(file.originalname))
-  }
-
-});
-const storage2 = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'public/images/showcase')
-  },
-  filename: (req, file, cb) => {
-    console.log(file)
-    cb(null, Date.now() + path.extname(file.originalname))
-  }
-
-});
-const storage3 = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'public/images/showcase')
+    cb(null, './images/showcase')
   },
   filename: (req, file, cb) => {
     console.log(file)
@@ -60,9 +30,6 @@ const storage3 = multer.diskStorage({
 
 });
 const upload = multer({storage: storage})
-const upload1 = multer({storage: storage1})
-const upload2 = multer({storage: storage2})
-const upload3 = multer({storage: storage3})
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -108,7 +75,7 @@ app.get('/', async (req, res) => {
             
   }
   var images = [];
-  fs.readdir('./images/showcase', (err, files) => {
+  fs.readdir('./public/images/showcase', (err, files) => {
       images = files;
       res.status(200).render('client/index', {services, images, showcase});
     })
@@ -283,15 +250,10 @@ app.get('/admin/showcase/edit', async (req, res) => {
     });
     
 });
-app.post('/admin/sales/product-save1', upload1.array('images', 3), (req, res) => {
+app.post('/admin/sales/product-save1', upload.array('images', 3), (req, res) => {
   res.status(200)
 });
-app.post('/admin/sales/product-save2', upload1.single('images', 3),(req, res) => {
-  res.status(200)
-});
-app.post('/admin/sales/product-save3', upload1.array('images', 5),(req, res) => {
-  res.status(200)
-});
+
 app.post('/admin/showcase/upload', upload.array('images', 4), async (req, res) => {
   fs.readdir('./images/showcase', (err, files) => {
     const path1 = './images/showcase/' + files[0];
