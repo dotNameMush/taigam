@@ -29,45 +29,14 @@ const storage = multer.diskStorage({
   }
 
 });
-const storage1 = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'public/images/product')
-  },
-  filename: (req, file, cb) => {
-    console.log(file)
-    cb(null, Date.now() + path.extname(file.originalname))
-  }
 
-});
-const storage2 = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'public/images/showcase')
-  },
-  filename: (req, file, cb) => {
-    console.log(file)
-    cb(null, Date.now() + path.extname(file.originalname))
-  }
 
-});
-const storage3 = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'public/images/showcase')
-  },
-  filename: (req, file, cb) => {
-    console.log(file)
-    cb(null, Date.now() + path.extname(file.originalname))
-  }
-
-});
 const upload = multer({storage: storage})
-const upload1 = multer({storage: storage1})
-const upload2 = multer({storage: storage2})
-const upload3 = multer({storage: storage3})
 
 const port = process.env.PORT || 3000;
 const app = express();
 
-app.use(express.static('public'))
+app.use(express.static(__dirname, 'public'))
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.json());
