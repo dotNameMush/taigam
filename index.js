@@ -241,7 +241,7 @@ app.get('/admin/showcase', async (req, res) => {
             showcase = data.data();
         }
     var images = [];
-    fs.readdir('./public/images/showcase', (err, files) => {
+    fs.readdir('./images/showcase', (err, files) => {
       images = files;
       admin
       .auth()
@@ -293,7 +293,7 @@ app.post('/admin/sales/product-save3', upload1.array('images', 5),(req, res) => 
   res.status(200)
 });
 app.post('/admin/showcase/upload', upload.array('images', 4), async (req, res) => {
-  fs.readdir('./public/images/showcase', (err, files) => {
+  fs.readdir('./images/showcase', (err, files) => {
     const path1 = './public/images/showcase/' + files[0];
     const path2 = './public/images/showcase/' + files[1];
     const path3 = './public/images/showcase/' + files[2];
