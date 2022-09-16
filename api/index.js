@@ -294,10 +294,10 @@ app.post('/api/admin/sales/product-save3', upload1.array('images', 5),(req, res)
 });
 app.post('/api/admin/showcase/upload', upload.array('images', 4), async (req, res) => {
   fs.readdir('./images/showcase', (err, files) => {
-    const path1 = './public/images/showcase/' + files[0];
-    const path2 = './public/images/showcase/' + files[1];
-    const path3 = './public/images/showcase/' + files[2];
-    const path4 = './public/images/showcase/' + files[3];
+    const path1 = './images/showcase/' + files[0];
+    const path2 = './images/showcase/' + files[1];
+    const path3 = './images/showcase/' + files[2];
+    const path4 = './images/showcase/' + files[3];
     fs.unlinkSync(path1);
     fs.unlinkSync(path2);
     fs.unlinkSync(path3);
