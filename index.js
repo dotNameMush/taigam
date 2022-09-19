@@ -74,8 +74,13 @@ app.get('/', async (req, res) => {
     showcase = showdata.data();
             
   }
+  var images = [];
+  fs.readdir('./public/images/showcase', (err, files) => {
+    images = files;
+    res.status(200).render('client/index', {services, showcase});
+    
+  })
   
-  res.status(200).render('client/index', {services, showcase});
     
   
   
@@ -106,7 +111,7 @@ app.get("/admin", (req, res) => {
 });
 app.get('/admin/sales', async (req, res) => {
     const sessionCookie = req.cookies.session || "";
-    const product = await firestore.collection('products');
+    const product = firestore.collection('products');
         const data = await product.get();
         const products = [];
         if(data.empty) {
@@ -206,7 +211,7 @@ app.get('/admin/showcase', async (req, res) => {
             showcase = data.data();
         }
     var images = [];
-    fs.readdir('./images/showcase', (err, files) => {
+    fs.readdir('./public/images/showcase', (err, files) => {
       images = files;
       admin
       .auth()
@@ -253,11 +258,11 @@ app.post('/admin/sales/product-save1', upload.array('images', 3), (req, res) => 
 });
 
 app.post('/admin/showcase/upload', upload.array('images', 4), async (req, res) => {
-  fs.readdir('./images/showcase', (err, files) => {
-    const path1 = './images/showcase/' + files[0];
-    const path2 = './images/showcase/' + files[1];
-    const path3 = './images/showcase/' + files[2];
-    const path4 = './images/showcase/' + files[3];
+  fs.readdir('./public/images/showcase', (err, files) => {
+    const path1 = './public/images/showcase/' + files[0];
+    const path2 = './public/images/showcase/' + files[1];
+    const path3 = './public/images/showcase/' + files[2];
+    const path4 = './public/images/showcase/' + files[3];
     fs.unlinkSync(path1);
     fs.unlinkSync(path2);
     fs.unlinkSync(path3);
