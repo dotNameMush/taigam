@@ -10,6 +10,8 @@
 <link rel="stylesheet" href="../../css/admin/Борлуулалт.css" media="screen">
     <script class="u-script" type="text/javascript" src="../../js/admin/jquery.js" "="" defer=""></script>
     <script class="u-script" type="text/javascript" src="../../js/admin/nicepage.js" "="" defer=""></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer ></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <meta name="generator" content="Nicepage 4.17.10, taigam-altai.mn">
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
     
@@ -40,8 +42,8 @@
           </div>
           <div class="u-custom-menu u-nav-container">
             <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/admin" style="padding: 10px 20px;">Home</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/admin/settings" style="padding: 10px 20px;">Үндсэн тохиргоо</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/sessionLogout" style="padding: 10px 20px;">Гарах</a>
+</li>
+<li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/sessionLogout" style="padding: 10px 20px;">Гарах</a>
 </li></ul>
           </div>
           <div class="u-custom-menu u-nav-container-collapse">
@@ -49,16 +51,21 @@
               <div class="u-inner-container-layout u-sidenav-overflow">
                 <div class="u-menu-close"></div>
                 <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/admin">Home</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/admin/settings">Үндсэн тохиргоо</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/sessionLogout">Гарах</a>
-</li></ul>
+                  </li>
+                  <li class="u-nav-item"><a class="u-button-style u-nav-link" href="/sessionLogout">Гарах</a>
+                  </li>
+                </ul>
               </div>
             </div>
             <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
           </div>
         </nav>
       </div></header>
+    
     <section class="u-align-center u-clearfix u-grey-10 u-section-1" id="sec-4295">
+      <div style="width: 80%;height: 50px; display: flex; justify-content: end; align-items: center;">
+        <button onclick="createProduct()" id="createbutton" class="u-border-none u-btn u-btn-rectangle u-button-style u-custom-color-1 u-btn-1">Шинээр үүсгэх</button>
+      </div>
       <div class="u-clearfix u-sheet u-sheet-1"><!--products--><!--products_options_json--><!--{"type":"products-recent","source":"","tags":"","count":""}--><!--/products_options_json-->
         <div class="u-expanded-width u-layout-horizontal u-pagination-center u-products u-products-1">
           <div class="u-repeater u-repeater-1">
@@ -66,12 +73,12 @@
               <!--product_item-->
               <div class="u-align-left u-container-style u-products-item u-radius-10 u-repeater-item u-shape-round u-white u-repeater-item-1">
                 <div class="u-container-layout u-similar-container u-container-layout-1"><!--product_image-->
-                  <img alt="" class="u-expanded-width u-image u-image-default u-product-control u-image-1" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyMS4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0ibWFuIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCgkgd2lkdGg9IjI1NnB4IiBoZWlnaHQ9IjI1NnB4IiB2aWV3Qm94PSIwIDAgMjU2IDI1NiIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMjU2IDI1NiIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8cmVjdCBmaWxsPSIjQzZEOEUxIiB3aWR0aD0iMjU2IiBoZWlnaHQ9IjI1NiIvPg0KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGZpbGw9IiM3Rjk2QTYiIGQ9Ik0xOTIuNyw1NGMwLDAsNS4zLDAuMywxMy4yLDkuMmM3LjksOC45LDE0LjMsMTksMTUuOCwyNS44DQoJYzEuNSw2LjgsMiwxMy42LDAuMywxNy41Yy0xLjgsMy45LTExLjQsMzQuNC0xMS43LDQzLjljLTAuMyw5LjUtMi42LDUzLTIuNiw1M2gtMTAuNWwtMi4xLTU3LjdjMCwwLTAuMy0xMC43LTMuOC0xMC43DQoJYy0zLjUsMC0xNi43LDQuNC0yOC45LDI3QzE1MCwxODQuNSwxNDMsMTk3LjUsMTM2LDIwMC44Yy03LDMuMy01Ny4zLDQuMi03MSwyLjFjLTEzLjctMi4xLTMxLjMtOS41LTMxLjMtOS41cy0zLjgtNy4xLDctMTAuMQ0KCWMxMC44LTMsNDEuOC0xMyw0OC4yLTE2LjljMy43LTIuMiwyOSw2LjksMzguOS01LjFjOS4xLTExLjEsMzcuMy03MSw0NS42LTgyLjlDMTgzLjQsNjQuMSwxOTAuOCw1NCwxOTIuNyw1NHoiLz4NCjwvc3ZnPg0K"><!--/product_image--><!--product_title-->
+                  <img alt="" class="u-expanded-width u-image u-image-default u-product-control u-image-1" src="../../images/product/<%= products[i].mid %>"><!--/product_image--><!--product_title-->
                   <h4 class="u-product-control u-text u-text-1">
                     <a class="u-product-title-link" href="#"><!--product_title_content--><%= products[i].name %><!--/product_title_content--></a>
                   </h4><!--/product_title--><!--product_content-->
                   <div class="u-product-control u-product-desc u-text u-text-2"><!--product_content_content-->
-                    <p><%= products[i].desc %></p><!--/product_content_content-->
+                    <p><%= products[i].desc1 %></p><!--/product_content_content-->
                     
                   </div><!--/product_content--><!--product_button--><!--options_json--><!--{"clickType":"go-to-page","content":"Засах"}--><!--/options_json-->
                   <a href="/admin/sales/<%= products[i].id %>" class="u-border-none u-btn u-btn-rectangle u-button-style u-custom-color-1 u-product-control u-btn-1" data-animation-name="" data-animation-duration="0" data-animation-direction=""><!--product_button_content-->Засах<!--/product_button_content--></a><!--/product_button-->
@@ -112,6 +119,40 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
     
     
     
-    
+    <script>
+      function createProduct() {
+        var data = {
+          create: 'create'
+        }
+        fetch('/admin/sales/create', {
+          method: "POST",
+          headers: {
+                      Accept: "application/json",
+                      "Content-Type": "application/json",
+                      "CSRF-Token": Cookies.get("XSRF-TOKEN"),
+                    },
+          body: JSON.stringify(data),
+        }).then(function(response){
+          function setback() {
+            document.getElementById('delbutton').innerText = 'Устгах';
+          }
+          const timeout = setTimeout(setback, 2000);
+          switch (response.status) {
+            case 201:
+              location.reload();
+              break;
+            
+            case 500:
+              document.getElementById('createbutton').innerText = 'Алдаа гарлаа';
+              timeout
+              break;
+          }
+          console.log(response.status)
+          
+        });
+        
+      }
+    </script>
   
-</body></html>
+</body>
+</html>

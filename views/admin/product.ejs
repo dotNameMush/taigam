@@ -37,32 +37,35 @@
     
     <section class="u-align-left u-clearfix u-image u-shading u-section-1" src="" data-image-width="1920" data-image-height="1358" id="sec-58b1">
       <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
-        <h1 class="u-text u-text-default u-title u-text-1" contenteditable="true">Sample Headline</h1>
+        <h1 class="u-text u-text-default u-title u-text-1" contenteditable="true" id="name"><%= product.name %></h1>
+        <p hidden id="productid"><%= id %></p>
       </div>
     </section>
     <section class="u-clearfix u-custom-color-1 u-section-2" id="carousel_50b2">
       
       
       <div class="u-clearfix u-sheet u-sheet-1">
-        <img class="u-image u-image-default u-image-1" id="image1-2" src="../../images/hggh-min.jpg" alt="" data-image-width="1620" data-image-height="1080">
-        <img class="u-image u-image-default u-image-2" id="image1-1" src="../../images/hggh-min.jpg" alt="" data-image-width="1620" data-image-height="1080">
-        <img class="u-image u-image-default u-image-3" id="image1-3" src="../../images/hggh-min.jpg" alt="" data-image-width="1620" data-image-height="1080">
+        <img class="u-image u-image-default u-image-1" id="image1-2" src="../../images/product/<%= product.top1 %>" alt="" data-image-width="1620" data-image-height="1080">
+        <img class="u-image u-image-default u-image-2" id="image1-1" src="../../images/product/<%= product.top2 %>" alt="" data-image-width="1620" data-image-height="1080">
+        <img class="u-image u-image-default u-image-3" id="image1-3" src="../../images/product/<%= product.top3 %>" alt="" data-image-width="1620" data-image-height="1080">
         <div class="u-align-left u-container-style u-group u-white u-group-1">
           <div class="u-container-layout u-valign-top-lg u-valign-top-md u-valign-top-sm u-valign-top-xl u-container-layout-1">
-            <h2 class="u-text u-text-default u-text-1" contenteditable="true"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</h2>
+            <h2 class="u-text u-text-default u-text-1" contenteditable="true" id="desc1"><%= product.desc1 %></h2>
           </div>
         </div>
         <div class="u-align-left u-container-style u-grey-80 u-group u-group-2">
           <div class="u-container-layout u-valign-middle u-container-layout-2">
-            <h2 class="u-text u-text-default u-text-2" contenteditable="true"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</h2>
+            <h2 class="u-text u-text-default u-text-2" contenteditable="true" id="desc2"><%= product.desc2 %></h2>
           </div>
         </div>
       </div>
       <div style="display: flex; justify-content: center; margin-bottom:20px;">
-        <form action="/admin/sales/product-save?_csrf=<%= csrfToken %>" method="post" enctype="multipart/form-data" name="form1" id="form1">
-        <input type="file" accept="image/*" onchange="image11(this)" name="image1" id="image1" required>
-        <input type="file" accept="image/*" onchange="image12(this)" name="image2" id="image2" required>
-        <input type="file" accept="image/*" onchange="image13(this)" name="image3" id="image3" required>
+        <form action="/admin/sales/product-save1?_csrf=<%= csrfToken %>" method="post" enctype="multipart/form-data" name="form1" id="form1">
+        <input type="file" accept="image/*" onchange="image11(this)" name="image" id="image1" required>
+        <input type="file" accept="image/*" onchange="image12(this)" name="image" id="image2" required>
+        <input type="file" accept="image/*" onchange="image13(this)" name="image" id="image3" required>
+        <input type="text" value="<%= id %>" hidden name="id">
+        <button type="submit" style="color: black;">Save</button>
         </form>
       </div>
     </section>
@@ -72,10 +75,12 @@
           <div class="u-layout-row">
             <div class="u-align-left u-container-style u-grey-5 u-layout-cell u-left-cell u-size-60 u-layout-cell-1" src="">
               <div class="u-container-layout u-container-layout-1">
-                <h2 class="u-text u-text-palette-1-base u-text-1" contenteditable="true">We’re here to help you to finding a best way</h2>
-                <p class="u-text u-text-2" contenteditable="true">Sample text. Lorem ipsum dolor sit amet, consectetur adipiscing elit nullam nunc justo sagittis suscipit ultrices.</p>
-                <form action="/admin/sales/product-save?_csrf=<%= csrfToken %>" method="POST" enctype="multipart/form-data" name="form2" id="form2">
-                <input type="file" accept="image/*" onchange="image21(this)" maxlength="4" name="image20" id="image20">
+                <h2 class="u-text u-text-palette-1-base u-text-1" contenteditable="true" id="midTitle"><%= product.midTitle %></h2>
+                <p class="u-text u-text-2" contenteditable="true" id="midSubtitle"><%= product.midSubtitle %></p>
+                <form style="margin-top: 20px;" action="/admin/sales/product-save2?_csrf=<%= csrfToken %>" method="POST" enctype="multipart/form-data" name="form2" id="form2">
+                <input type="file" accept="image/*" onchange="image21(this)" maxlength="4" name="image" id="image20">
+                <input type="text" value="<%= id %>" hidden name="id">
+                <button type="submit">Save</button>
                 </form>
               </div>
             </div>
@@ -83,20 +88,20 @@
         </div>
       </div>
     </section>
-    <img style="width: 100%;" id="img2" src="../../images/1.jpg?rand=39e8" alt="" > 
+    <img style="width: 100%;" id="img2" src="../../images/product/<%= product.mid %>" alt="" > 
 
     <section class="u-align-left u-clearfix u-section-4" id="sec-6e88">
       <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
-        <div class="fr-view u-clearfix u-rich-text u-text u-text-1" data-animation-name="customAnimationIn" data-animation-duration="1000" data-animation-direction="" data-animation-delay="500">
+        <div class="fr-view u-clearfix u-rich-text u-text u-text-1">
           <h1 style="text-align: left;">
-            <span style="line-height: 2.0;" contenteditable="true">Sample Headline</span>
+            <span style="line-height: 2.0;" contenteditable="true" id="headline"><%= product.headline %></span>
           </h1>
           <p style="text-align: left;">
-            <span style="line-height: 2; font-size: 1.25rem;" contenteditable="true">Sample text. Click to select the text box. Click again or double click to start editing the text. Dictum non consectetur a erat nam at. Aliquam malesuada bibendum arcu vitae elementum curabitur vitae. Tellus mauris a diam maecenas sed enim ut sem. Ipsum faucibus vitae aliquet.&nbsp;</span>
+            <span style="line-height: 2; font-size: 1.25rem;" contenteditable="true" id="article"><%= product.article %>&nbsp;</span>
           </p>
           <blockquote>
             <p style="text-align: left; text-decoration: none;">
-              <span style="line-height: 2; font-weight: 700;" id="test" contenteditable="true">Euismod in pellentesque massa placerat. Risus quis varius quam quisque. Fermentum leo vel orci porta non pulvinar neque. Pretium vulputate sapien nec sagittis aliquam malesuada bibendum arcu vitae. Viverra aliquet eget sit amet. Platea dictumst vestibulum rhoncus est. Leo integer malesuada nunc vel risus commodo viverra maecenas accumsan.&nbsp;</span>
+              <span style="line-height: 2; font-weight: 700;" contenteditable="true" id="quote"><%= product.quote %>&nbsp;</span>
             </p>
           </blockquote>
         </div>
@@ -105,16 +110,17 @@
     <section class="u-align-center u-clearfix u-section-5" id="sec-3e2a">
       <div class="u-clearfix u-sheet u-sheet-1">
         <h2 class="u-text u-text-default u-text-1" >Танилцуулга зураг</h2>
-        <form action="/admin/sales/product-save?_csrf=<%= csrfToken %>" method="post" enctype="multipart/form-data" name="form3" id="form3">
-        <input type="file" accept="image/*" name="image30" id="image30" multiple>
-      </form>
-      </form>
+        <form action="/admin/sales/product-save3?_csrf=<%= csrfToken %>" method="post" enctype="multipart/form-data" name="form3" id="form3">
+          <input type="text" value="<%= id %>" hidden name="id">
+          <input type="file" accept="image/*" name="images" id="image30" multiple>
+          <button type="submit">Save</button>
+        </form>
         <div class="u-carousel u-expanded-width u-gallery u-layout-carousel u-lightbox u-no-transition u-show-text-none u-gallery-1" data-interval="5000" data-u-ride="carousel" id="carousel-9387">
           <ol class="u-absolute-hcenter u-carousel-indicators u-carousel-indicators-1">
             <li data-u-target="#carousel-9387" data-u-slide-to="0" class="u-active u-grey-70 u-shape-circle" style="width: 10px; height: 10px;"></li>
             <%
-            var carouselImages = ['../../images/1.jpg?rand=39e8', '../../images/1.jpg?rand=39e8', '../../images/1.jpg?rand=39e8']; 
-            for (let index = 1; index < carouselImages.length; index++) {%>
+             
+            for (let index = 1; index < product.bottomList.length; index++) {%>
               <li data-u-target="#carousel-9387" data-u-slide-to="<%= index %>" class="u-grey-70 u-shape-circle" style="width: 10px; height: 10px;"></li>
             <% } %>
             
@@ -124,19 +130,17 @@
             <div class="u-carousel-inner u-gallery-inner" role="listbox">
               <div class="u-active u-carousel-item u-gallery-item u-carousel-item-1">
                 <div class="u-back-slide">
-                  <img class="u-back-image u-expanded" src="../../images/1.jpg?rand=39e8">
+                  <img class="u-back-image u-expanded" src="../../images/product/<%= product.bottomList[0] %>">
                 </div>
                 <div class="u-over-slide u-over-slide-1">
                   <h3 class="u-gallery-heading"></h3>
                   <p class="u-gallery-text"></p>
                 </div>
               </div>
-              <%
-                var carouselImages = ['../../images/1.jpg?rand=39e8', '../../images/1.jpg?rand=39e8', '../../images/1.jpg?rand=39e8'];
-                for (let index = 1; index < carouselImages.length; index++) {%>
+              <% for (let index = 1; index < product.bottomList.length; index++) {%>
                   <div class="u-carousel-item u-gallery-item u-carousel-item-2">
                     <div class="u-back-slide">
-                      <img class="u-back-image u-expanded" src="<%= carouselImages[index]%>">
+                      <img class="u-back-image u-expanded" src="../../images/product/<%= product.bottomList[index]%>">
                     </div>
                     <div class="u-over-slide u-over-slide-2">
                       <h3 class="u-gallery-heading"></h3>
@@ -186,45 +190,106 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
           color:#FFF;
           cursor: pointer;
           border-radius:50px;"
-          onclick="save()"
+          onclick="saveTextInfo()"
           >
-          <i>Save</i>
+          <i id="savebutton">Save</i>
+    </button>
+    <button
+          style="
+          position:fixed;
+          width:80px;
+          height:80px;
+          bottom:40px;
+          left:40px;
+          background-color:#da0000;
+          color:#FFF;
+          cursor: pointer;
+          border-radius:50px;"
+          onclick="deleteProduct()"
+          >
+          <i id="delbutton">Устгах</i>
     </button>
     <script>
-      function save() {
-        const fileInputNames = ['image1','image2','image3','image20','image30',];
-        var filledInputNames = [];
-        
-        for (let index = 0; index < fileInputNames.length; index++) {
-          if (document.getElementById(fileInputNames[index]).files.length != 0) {
-            filledInputNames.push(fileInputNames[index]);
+      function deleteProduct() {
+        function setback() {
+            document.getElementById('delbutton').innerText = 'Устгах';
           }
-        }
-        if (filledInputNames.includes("image1" && "image2" && "image3")) {
-          console.log('1')
-          $("#form1").submit();
-        } 
-        if (filledInputNames.includes("image20")) {
-          console.log('2')
-          $("#form2").submit();
-        } 
-        if (filledInputNames.includes("image30")) {
-          console.log('3')
-          $("#form3").submit();
-        } 
+          const timeout = setTimeout(setback, 2000);
+        var formData = {
+            id: document.getElementById('productid').innerText,
+          }
+        fetch("/admin/sales/delete", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "CSRF-Token": Cookies.get("XSRF-TOKEN"),
 
-        // for (let index = 0; index < filledInputNames.length; index++) {
-        //   formData.append(filledInputNames[index], tempFormData.get(filledInputNames[index]))
+          },
+          body: JSON.stringify(formData),
+        }).then(function(response){
+          switch (response.status) {
+            case 201:
+              window.location.href = '/admin/sales';
+              break;
+            
+            case 500:
+              document.getElementById('delbutton').innerText = 'Алдаа гарлаа';
+              timeout
+              break;
+          }
+          console.log(response.status)
           
-        // }
-        // var data = {};
-        // for (const [key, value] of formData) {
-        //   data[key] = value;
-        // }
-        // console.log(data)
+        })
       }
       function saveTextInfo() {
+          function setback() {
+            document.getElementById('savebutton').innerText = 'Save';
+          }
+          const timeout = setTimeout(setback, 2000);
+          const name = document.getElementById("name").innerText;
+          const desc1 = document.getElementById("desc1").innerText;
+          const desc2 = document.getElementById("desc2").innerText;
+          const midTitle = document.getElementById("midTitle").innerText;
+          const midSubtitle = document.getElementById("midSubtitle").innerText;
+          const headline = document.getElementById("headline").innerText;
+          const article = document.getElementById("article").innerText;
+          const quote = document.getElementById("quote").innerText;
+          var formData = {
+            id: document.getElementById('productid').innerText,
+            name: name,
+            desc1: desc1,
+            desc2: desc2,
+            midTitle: midTitle,
+            midSubtitle: midSubtitle,
+            headline: headline,
+            article: article,
+            quote: quote,
+          }
+          fetch("/admin/sales/update-text", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "CSRF-Token": Cookies.get("XSRF-TOKEN"),
 
+          },
+          body: JSON.stringify(formData),
+        }).then(function(response){
+          switch (response.status) {
+            case 201:
+              document.getElementById('savebutton').innerText = 'Амжилттай';
+              timeout
+              break;
+            
+            case 500:
+              document.getElementById('savebutton').innerText = 'Алдаа гарлаа';
+              timeout
+              break;
+          }
+          console.log(response.status)
+          
+        })
       }
       function image21(input) {
         if (input.files && input.files[0]) {

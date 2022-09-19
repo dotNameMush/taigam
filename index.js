@@ -24,12 +24,21 @@ const storage = multer.diskStorage({
     cb(null, './public/images/showcase')
   },
   filename: (req, file, cb) => {
-    console.log(file)
+    cb(null, Date.now() + path.extname(file.originalname))
+  }
+
+});
+const productStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './public/images/product')
+  },
+  filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname))
   }
 
 });
 const upload = multer({storage: storage})
+const productUpload = multer({storage: productStorage})
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -88,8 +97,52 @@ app.get('/', async (req, res) => {
 app.get('/about', (req, res) => {
   res.status(200).render('client/Бидний-Тухай');
 });
-app.get('/sales', (req, res) => {
-  res.status(200).render('client/Борлуулалт');
+app.get('/sales', async (req, res) => {
+  const product = firestore.collection('products').orderBy('timestamp');
+        const data = await product.get();
+        const products = [];
+        if(data.empty) {
+            return null;
+        }else {
+            data.forEach(doc => {
+                const product = new Product(
+                  doc.id,
+                  doc.data().name,
+                  doc.data().desc1,
+                  doc.data().desc2,
+                  doc.data().category,
+                  doc.data().top1,
+                  doc.data().top2,
+                  doc.data().top3,
+                  doc.data().mid,
+                  doc.data().bottomList,
+                  doc.data().midTitle,
+                  doc.data().midTSubtitle,
+                  doc.data().headline,
+                  doc.data().article,
+                  doc.data().quote,
+                );
+                products.push(product);
+            });
+            
+        }
+  res.status(200).render('client/Борлуулалт', { products });
+});
+app.get('/sales/:id', async (req, res) => {
+  
+  const id = req.params.id;
+  const ref = firestore.collection('products').doc(id);
+      const data = await ref.get();
+      var product = {};
+      if(!data.exists) {
+          res.status(404)
+      }else {
+          product = data.data();
+          
+      }
+    res.render('client/product', {product , id});
+  
+  
 });
 app.get('/contact', (req, res) => {
   res.status(200).render('client/Холбоо-барих');
@@ -111,7 +164,7 @@ app.get("/admin", (req, res) => {
 });
 app.get('/admin/sales', async (req, res) => {
     const sessionCookie = req.cookies.session || "";
-    const product = firestore.collection('products');
+    const product = firestore.collection('products').orderBy('timestamp');
         const data = await product.get();
         const products = [];
         if(data.empty) {
@@ -122,13 +175,24 @@ app.get('/admin/sales', async (req, res) => {
                     doc.id,
                     doc.data().name,
                     doc.data().desc1,
+                    doc.data().desc2,
                     doc.data().category,
+                    doc.data().top1,
+                    doc.data().top2,
+                    doc.data().top3,
+                    doc.data().mid,
+                    doc.data().bottomList,
+                    doc.data().midTitle,
+                    doc.data().midTSubtitle,
+                    doc.data().headline,
+                    doc.data().article,
+                    doc.data().quote,
                 );
                 products.push(product);
             });
             
         }
-    console.log(products)
+    
     admin
     .auth()
     .verifySessionCookie(sessionCookie, true /** checkRevoked */)
@@ -141,12 +205,41 @@ app.get('/admin/sales', async (req, res) => {
     });
     
 });
+app.post('/admin/sales/create', async (req, res) => {
+  const data = {
+    name: 'New Sales',
+    desc1: 'Sample text. Lorem ipsum dolor sit amet, consectetur adipiscing elit nullam nunc justo sagittis suscipit ultrices.',
+    desc2: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    category: 'Орон сууц',
+    top1: 'default-image.jpg',
+    top2: 'default-image.jpg',
+    top3: 'default-image.jpg',
+    mid: 'default-image.jpg',
+    bottomList: ['default-image.jpg', 'default-image.jpg'],
+    midTitle: 'We are here to help you to finding a best way',
+    midTSubtitle: 'Sample text. Lorem ipsum dolor sit amet, consectetur adipiscing elit nullam nunc justo sagittis suscipit ultrices.',
+    headline: 'Sample Headline',
+    article: 'Sample text. Click to select the text box. Click again or double click to start editing the text. Dictum non consectetur a erat nam at. Aliquam malesuada bibendum arcu vitae elementum curabitur vitae. Tellus mauris a diam maecenas sed enim ut sem. Ipsum faucibus vitae aliquet.',
+    quote: 'Euismod in pellentesque massa placerat. Risus quis varius quam quisque. Fermentum leo vel orci porta non pulvinar neque. Pretium vulputate sapien nec sagittis aliquam malesuada bibendum arcu vitae. Viverra aliquet eget sit amet. Platea dictumst vestibulum rhoncus est. Leo integer malesuada nunc vel risus commodo viverra maecenas accumsan. ',
+    timestamp: admin.firestore.Timestamp.fromDate(new Date()),
+  };
+  const ref = firestore.collection('products');
+  try {
+    await ref.add(data);
+    res.set('Content-Type', 'text/html');
+    res.status(201).send('Done');
+  } catch (e) {
+      res.status(500);
+      console.log(e)
+  }
+  
+  console.log('data created')
+});
 
 app.get('/admin/sales/:id', async (req, res) => {
     const sessionCookie = req.cookies.session || "";
     const id = req.params.id;
-    const link = '../../images/bg2.jpg';
-    const ref = await firestore.collection('products').doc(id);
+    const ref = firestore.collection('products').doc(id);
         const data = await ref.get();
         var product = {};
         if(!data.exists) {
@@ -160,12 +253,108 @@ app.get('/admin/sales/:id', async (req, res) => {
     .verifySessionCookie(sessionCookie, true /** checkRevoked */)
     .then((userData) => {
       console.log("Logged in:", userData.email)
-      res.render('admin/product', {product , link});
+      res.render('admin/product', {product , id});
     })
     .catch((error) => {
       res.redirect("/login");
     });
     
+});
+app.post('/admin/sales/delete', async (req, res) => {
+  const sessionCookie = req.cookies.session || "";
+  const id = req.body.id;
+  const ref = firestore.collection('products').doc(id);
+  try {
+      await ref.delete();
+      res.set('Content-Type', 'text/html');
+      res.status(201).send('Done');
+  } catch (e) {
+      res.status(500);
+      console.log(e)
+  }
+  
+});
+app.post('/admin/sales/update-text', async (req, res) => {
+  const sessionCookie = req.cookies.session || "";
+  const ref = firestore.collection('products').doc(req.body.id);
+  const formData = {
+    name: req.body.name,
+    desc1: req.body.desc1,
+    desc2: req.body.desc2,
+    midTitle: req.body.midTitle,
+    midSubtitle: req.body.midSubtitle,
+    headline: req.body.headline,
+    article: req.body.article,
+    quote: req.body.quote,
+  }
+
+  admin
+  .auth()
+  .verifySessionCookie(sessionCookie, true /** checkRevoked */)
+  .then(async (userData) => {
+      console.log("Logged in:", userData.email)
+      try {
+          await ref.update(formData);
+          res.set('Content-Type', 'text/html');
+          res.status(201).send('Done');
+      } catch (e) {
+          res.status(500);
+          console.log(e)
+      }
+      
+    
+  })
+  .catch((error) => {
+    res.redirect("/login");
+  });
+});
+app.post('/admin/sales/product-save1', productUpload.array('image', 3), async (req, res) => {
+  const ref = firestore.collection('products').doc(req.body.id);
+  const oldData = await ref.get();
+  const doc = oldData.data();
+  const path1 = './public/images/product/' + doc.top1;
+  const path2 = './public/images/product/' + doc.top2;
+  const path3 = './public/images/product/' + doc.top3;
+  fs.unlinkSync(path1);
+  fs.unlinkSync(path2);
+  fs.unlinkSync(path3);
+  const formData = {
+    top1: req.files[1].filename,
+    top2: req.files[0].filename,
+    top3: req.files[2].filename,
+  }
+  await ref.update(formData);
+  const href = "/admin/sales/" + req.body.id;
+  res.redirect(href);
+});
+app.post('/admin/sales/product-save2', productUpload.single('image', 1), async (req, res) => {
+  const ref = firestore.collection('products').doc(req.body.id);
+  const oldData = await ref.get();
+  const doc = oldData.data();
+  const path = './public/images/product/' + doc.mid;
+  fs.unlinkSync(path);
+  const formData = {
+    mid: req.file.filename,
+  }
+  await ref.update(formData);
+  const href = "/admin/sales/" + req.body.id;
+  res.redirect(href);
+});
+app.post('/admin/sales/product-save3', productUpload.array('images', 12), async (req, res) => {
+  const ref = firestore.collection('products').doc(req.body.id);
+  const oldData = await ref.get();
+  const doc = oldData.data();
+  doc.bottomList.forEach(item => {
+    const path = './public/images/product/' + item;
+    fs.unlinkSync(path);
+  });
+  const listOfImages = req.files.map(({filename}) => (filename));
+  const formData = {
+    bottomList: listOfImages,
+  }
+  await ref.update(formData);
+  const href = "/admin/sales/" + req.body.id;
+  res.redirect(href);
 });
 
 app.get('/admin/service', async (req, res) => {
@@ -204,6 +393,7 @@ app.get('/admin/showcase', async (req, res) => {
     
     const service = firestore.collection('showcase').doc('nEyjlOFanwfyfYjianar');
         const data = await service.get();
+        
         var showcase = {};
         if(!data.exists) {
             res.status(404)
@@ -240,7 +430,7 @@ app.get('/admin/showcase/edit', async (req, res) => {
             showcase = data.data();
             
         }
-        console.log(showcase)
+        
     admin
     .auth()
     .verifySessionCookie(sessionCookie, true /** checkRevoked */)
@@ -253,9 +443,8 @@ app.get('/admin/showcase/edit', async (req, res) => {
     });
     
 });
-app.post('/admin/sales/product-save1', upload.array('images', 3), (req, res) => {
-  res.status(200)
-});
+
+
 
 app.post('/admin/showcase/upload', upload.array('images', 4), async (req, res) => {
   fs.readdir('./public/images/showcase', (err, files) => {
@@ -269,7 +458,7 @@ app.post('/admin/showcase/upload', upload.array('images', 4), async (req, res) =
     fs.unlinkSync(path4);
   });
   const sessionCookie = req.cookies.session || "";
-  console.log(req.body)
+  
   const formData = {
     title: req.body.title,
     subtitle: req.body.subtitle,
@@ -319,7 +508,7 @@ app.post("/sessionLogin", (req, res) => {
         }
       );
   });
-
+  
   app.post("/admin/update-service", async (req, res) => {
     const sessionCookie = req.cookies.session || "";
     const ref = firestore.collection('services');
