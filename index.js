@@ -21,7 +21,7 @@ const csrfMiddleware = csrf({ cookie: true });
 //file upload controller;
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, './images/showcase')
+    cb(null, './public/images/showcase')
   },
   filename: (req, file, cb) => {
     console.log(file)
