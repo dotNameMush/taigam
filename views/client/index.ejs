@@ -470,54 +470,17 @@ c0-7.4,3.4-18.8,18.8-18.8h13.8v15.4H75.5z"></path>
         class="u-expanded-width u-gallery u-layout-horizontal u-lightbox u-no-transition u-show-text-on-hover u-gallery-1"
         id="carousel-d7ba">
         <div class="u-gallery-inner u-gallery-inner-1" role="listbox">
-          <div class="u-effect-fade u-gallery-item u-gallery-item-1">
-            <div class="u-back-slide"><img class="u-back-image" src="../../images/default-image.jpg">
+          <!-- Slider item -->
+          <% for(var i=0; i < companies.length; i++) {%>
+            <div class="u-effect-fade u-gallery-item u-gallery-item-<%= i + 1 %>">
+              <div class="u-back-slide"><img class="u-back-image" src="../../images/companies/<%= companies[i] %>">
+              </div>
+              <div class="u-over-slide u-shading u-over-slide-<%= i + 1 %>">
+                <h3 class="u-gallery-heading" data-lang-en=""></h3>
+                <p class="u-gallery-text" data-lang-en=""></p>
+              </div>
             </div>
-            <div class="u-over-slide u-shading u-over-slide-1">
-              <h3 class="u-gallery-heading" data-lang-en=""></h3>
-              <p class="u-gallery-text" data-lang-en=""></p>
-            </div>
-          </div>
-          <div class="u-effect-fade u-gallery-item u-gallery-item-2">
-            <div class="u-back-slide"><img class="u-back-image" src="../../images/default-image.jpg">
-            </div>
-            <div class="u-over-slide u-shading u-over-slide-2">
-              <h3 class="u-gallery-heading" data-lang-en=""></h3>
-              <p class="u-gallery-text" data-lang-en=""></p>
-            </div>
-          </div>
-          <div class="u-effect-fade u-gallery-item u-gallery-item-3">
-            <div class="u-back-slide"><img class="u-back-image" src="../../images/default-image.jpg">
-            </div>
-            <div class="u-over-slide u-shading u-over-slide-3">
-              <h3 class="u-gallery-heading" data-lang-en=""></h3>
-              <p class="u-gallery-text" data-lang-en=""></p>
-            </div>
-          </div>
-          <div class="u-effect-fade u-gallery-item u-gallery-item-4">
-            <div class="u-back-slide"><img class="u-back-image" src="../../images/default-image.jpg">
-            </div>
-            <div class="u-over-slide u-shading u-over-slide-4">
-              <h3 class="u-gallery-heading" data-lang-en=""></h3>
-              <p class="u-gallery-text" data-lang-en=""></p>
-            </div>
-          </div>
-          <div class="u-effect-fade u-gallery-item u-gallery-item-5">
-            <div class="u-back-slide"><img class="u-back-image" src="../../images/default-image.jpg">
-            </div>
-            <div class="u-over-slide u-shading u-over-slide-5">
-              <h3 class="u-gallery-heading" data-lang-en=""></h3>
-              <p class="u-gallery-text" data-lang-en=""></p>
-            </div>
-          </div>
-          <div class="u-effect-fade u-gallery-item u-gallery-item-6">
-            <div class="u-back-slide"><img class="u-back-image" src="../../images/default-image.jpg">
-            </div>
-            <div class="u-over-slide u-shading u-over-slide-6">
-              <h3 class="u-gallery-heading" data-lang-en=""></h3>
-              <p class="u-gallery-text" data-lang-en=""></p>
-            </div>
-          </div>
+          <% } %>
         </div>
         <a class="u-absolute-vcenter u-gallery-nav u-gallery-nav-prev u-grey-70 u-icon-circle u-opacity u-opacity-70 u-spacing-10 u-text-white u-gallery-nav-1"
           href="#" role="button">
@@ -557,11 +520,8 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
     </div>
   </section>
   <footer class="u-clearfix u-footer u-white" id="sec-f2f4">
-    <div class="u-clearfix u-sheet u-sheet-1">
-      <a href="https://taigam-altai.mn" class="u-image u-logo u-image-1" data-image-width="2130"
-        data-image-height="1916" title="taigam">
-        <img src="../../images/Taigamaltailogo.png" class="u-logo-image u-logo-image-1">
-      </a>
+    
+      
       <div
         class="u-align-left u-border-1 u-border-white u-expanded-width u-line u-line-horizontal u-opacity u-opacity-30 u-line-1">
       </div>
@@ -570,7 +530,7 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
         target="_blank"
         data-lang-en="{&quot;content&quot;:&quot;©Codepower LLC 2022&quot;,&quot;href&quot;:&quot;http://codepower.mn/&quot;}">©Codepower
         LLC 2022</a>
-    </div>
+    
   </footer>
 </body>
 

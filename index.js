@@ -58,6 +58,7 @@ app.use(function (req, res, next) {
   });
 //public routes
 app.get('/', async (req, res) => {
+  
   const service = firestore.collection('services');
   const data = await service.get();
   const services = [];
@@ -84,9 +85,13 @@ app.get('/', async (req, res) => {
             
   }
   var images = [];
+  var companies = [];
+  fs.readdir('./public/images/companies', (err, files) => {
+    companies = files;
+  })
   fs.readdir('./public/images/showcase', (err, files) => {
     images = files;
-    res.status(200).render('client/index', {services, showcase, images});
+    res.status(200).render('client/index', {services, showcase, images, companies});
     
   })
   
