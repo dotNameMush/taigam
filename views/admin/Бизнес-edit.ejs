@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;" lang="en"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="Тайгам алтай компанийн бизнесийн салбар компаниуд">
+    <title>засах</title>
+    <link rel="stylesheet" href="../../css/Бизнес.css" media="screen">
+    <link rel="stylesheet" href="../../css/nicepage.css" media="screen">
+    <link rel="stylesheet" href="../../css/admin/nicepage.css" media="screen">
+    <script class="u-script" type="text/javascript" src="../../js/jquery.js" "="" defer=""></script>
+    <script class="u-script" type="text/javascript" src="../../js/nicepage.js" "="" defer=""></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" defer ></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <meta name="generator" content="Codepower">
+    <link rel="icon" href="../../images/favicon.png">
+    <meta property="og:title" content="Бизнесийн салбарууд">
+    <meta property="og:description" content="Тайгам алтай компанийн бизнесийн салбар компаниуд">
+    <meta property="og:image" content="images/hggh-min.jpg">
+    <meta property="og:url" content="taigam-altai.mn/business">
+    <link rel="canonical" href="Taigam Altai | Business branches">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    
+    
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "",
+		"url": "Taigam Altai | Business branches",
+		"logo": "images/Taigamaltailogo.png",
+		"sameAs": [
+				"https://facebook.com/name",
+				"https://twitter.com/name",
+				"https://instagram.com/name"
+		]
+}</script>
+    <meta name="theme-color" content="#478ac9">
+    <meta name="twitter:site" content="@">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Тайгам Алтай Бизнесийн салбар">
+    <meta name="twitter:description" content="">
+    <meta property="og:type" content="website">
+  </head>
+  <body class="u-body u-xl-mode" data-lang="en"><header class="u-clearfix u-header u-header" id="sec-fd46"><div class="u-clearfix u-sheet u-sheet-1">
+    <a href="https://taigam-altai.mn" class="u-image u-logo u-image-1" data-image-width="2130" data-image-height="1916">
+      <img src="../../images/Taigamaltailogo.png" class="u-logo-image u-logo-image-1">
+    </a>
+    <p class="u-custom-font u-heading-font u-text u-text-default u-text-1">Админ</p>
+    <nav class="u-menu u-menu-one-level u-offcanvas u-menu-1">
+      <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
+        <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
+          <svg class="u-svg-link" viewBox="0 0 24 24"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
+          <svg class="u-svg-content" version="1.1" id="menu-hamburger" viewBox="0 0 16 16" x="0px" y="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+</g></svg>
+        </a>
+      </div>
+      <div class="u-custom-menu u-nav-container">
+        <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/admin" style="padding: 10px 20px;">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/sessionLogout" style="padding: 10px 20px;">Гарах</a>
+</li></ul>
+      </div>
+      <div class="u-custom-menu u-nav-container-collapse">
+        <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+          <div class="u-inner-container-layout u-sidenav-overflow">
+            <div class="u-menu-close"></div>
+            <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/admin">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/sessionLogout">Гарах</a>
+</li></ul>
+          </div>
+        </div>
+        <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+      </div>
+    </nav>
+  </div></header>
+      
+    <section class="companies-section">
+      <div class="companies-container">
+        <h2>Засах горим</h2>
+        <div class="companies-box">
+          <!-- Item start -->
+            <div class="company-item">
+              <div class="image" id="image" style="background-image: url('../../images/companies/<%= items[id].img%>');" ></div>
+              <div class="text-box">
+                <h3 class="u-gallery-heading" id="heading"><%= items[id].heading%></h3>
+                <p class="u-gallery-text" id="paragraph"><%= items[id].paragraph%></p>
+                <p id="href"><%= items[id].href%></p>
+              </div>
+            </div>
+          <!-- Item End -->
+        </div>
+        <fieldset>
+          <legend>Edit here</legend>
+          <form action="/admin/business/<%= id %>/save?_csrf=<%= csrfToken %>" method="POST" enctype="multipart/form-data" name="form" id="form" class="edit-form">
+            <input type="text" name="heading" onchange="onchange1(this)" value="<%= items[id].heading%>" >
+            <input type="text" name="paragraph" onchange="onchange2(this)" value="<%= items[id].paragraph%>" >
+            <input type="text" name="href" onchange="onchange3(this)" value="<%= items[id].href%>" >
+            <input type="file" onchange="imageController(this)" accept="image/*" name="image">
+            <input type="submit" value="Save">
+          </form>
+        </fieldset>
+        
+        
+        <button onclick="create()" style="background-color: red; color: white; margin-top: 10px;">Delete</button>
+        </div>
+      </div>
+    </section>
+    
+    
+    
+    <footer class="u-align-center u-clearfix u-footer u-white u-footer" id="sec-4623"><div class="u-align-left u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <a href="https://taigam-altai.mn/templates" class="u-active-none u-align-center u-border-2 u-border-active-palette-2-dark-1 u-border-hover-palette-2-base u-border-palette-1-base u-btn u-button-style u-hover-none u-none u-text-hover-palette-2-base u-text-palette-1-base u-btn-1"> ©Codepower&nbsp;LLC 2022</a>
+      </div></footer>
+    <script>
+      function onchange1(input) {
+        document.getElementById('heading').innerText = input.value;
+      }
+      function onchange2(input) {
+        document.getElementById('paragraph').innerText = input.value;
+      }
+      function onchange3(input) {
+        document.getElementById('href').innerText = input.value;
+      }
+      function imageController(input) {
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            var style = "background-image: url('" + e.target.result + "');"
+          document.getElementById("image").setAttribute('style', style)
+          };
+          reader.readAsDataURL(input.files[0]);
+        }
+      }    
+    </script>
+  
+</body></html>

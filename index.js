@@ -37,7 +37,9 @@ const productStorage = multer.diskStorage({
   }
 
 });
+
 const upload = multer({storage: storage})
+
 const productUpload = multer({storage: productStorage})
 
 const port = process.env.PORT || 3000;
@@ -58,48 +60,15 @@ app.use(function (req, res, next) {
   });
 //public routes
 app.get('/', async (req, res) => {
-  
-  const service = firestore.collection('services');
-  const data = await service.get();
-  const services = [];
-  if(data.empty) {
-    return null;
-  }else {
-    data.forEach(doc => {
-        const service = new Service(
-            doc.id,
-            doc.data().title,
-            doc.data().subtitle,
-        );
-        services.push(service);
-    });
-    
-  }
-  const showcaseref = firestore.collection('showcase').doc('nEyjlOFanwfyfYjianar');
-  const showdata = await showcaseref.get();
-  var showcase = {};
-  if(!showdata.exists) {
-    res.status(404)
-  }else {
-    showcase = showdata.data();
-            
-  }
-  var images = [];
-  var companies = [];
-  fs.readdir('./public/images/companies', (err, files) => {
-    companies = files;
-    fs.readdir('./public/images/showcase', (err, files) => {
-      images = files;
-      res.status(200).render('client/index', {services, showcase, images, companies});
+  var data = JSON.parse(fs.readFileSync('./public/home.json'));
+  res.status(200).render('client/index', {data});
       
-    })
-  })
-  
-  
-    
-  
-  
 });
+app.get('/company', (req, res) => {
+  var data = JSON.parse(fs.readFileSync('./public/company.json'));
+  var items = data.items
+  res.render('client/Бизнес', {items})
+})
 app.get('/about', (req, res) => {
   res.status(200).render('client/Бидний-Тухай');
 });
@@ -365,7 +334,7 @@ app.post('/admin/sales/product-save3', productUpload.array('images', 12), async 
 
 app.get('/admin/service', async (req, res) => {
     const sessionCookie = req.cookies.session || "";
-    const service = await firestore.collection('services');
+    const service = firestore.collection('services');
         const data = await service.get();
         const services = [];
         if(data.empty) {
@@ -393,38 +362,9 @@ app.get('/admin/service', async (req, res) => {
     });
     
 });
+const adminHome = require('./routes/admin-home');
+app.use('/admin', adminHome)
 
-app.get('/admin/showcase', async (req, res) => {
-    const sessionCookie = req.cookies.session || "";
-    
-    const service = firestore.collection('showcase').doc('nEyjlOFanwfyfYjianar');
-        const data = await service.get();
-        
-        var showcase = {};
-        if(!data.exists) {
-            res.status(404)
-        }else {
-            showcase = data.data();
-        }
-    var images = [];
-    fs.readdir('./public/images/showcase', (err, files) => {
-      images = files;
-      admin
-      .auth()
-      .verifySessionCookie(sessionCookie, true /** checkRevoked */)
-      .then((userData) => {
-        console.log("Logged in:", userData.email)
-        res.render('admin/Санал-болгох', {showcase, images});
-      })
-      .catch((error) => {
-        res.redirect("/login");
-      });
-    })
-    
-    
-    
-    
-});
 app.get('/admin/showcase/edit', async (req, res) => {
     const sessionCookie = req.cookies.session || "";
     const service = firestore.collection('showcase').doc('nEyjlOFanwfyfYjianar');
@@ -434,7 +374,6 @@ app.get('/admin/showcase/edit', async (req, res) => {
             res.status(404)
         }else {
             showcase = data.data();
-            
         }
         
     admin
