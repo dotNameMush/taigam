@@ -99,8 +99,10 @@
           </form>
         </fieldset>
         
+        <form action="/admin/business/<%= id %>/delete?_csrf=<%= csrfToken %>" method="post" name="form">
+          <input type="submit" style="background-color: red; color: white; margin-top: 10px;" value="Delete"></input>
+        </form>
         
-        <button onclick="create()" style="background-color: red; color: white; margin-top: 10px;">Delete</button>
         </div>
       </div>
     </section>
@@ -111,6 +113,9 @@
         <a href="https://taigam-altai.mn/templates" class="u-active-none u-align-center u-border-2 u-border-active-palette-2-dark-1 u-border-hover-palette-2-base u-border-palette-1-base u-btn u-button-style u-hover-none u-none u-text-hover-palette-2-base u-text-palette-1-base u-btn-1"> ©Codepower&nbsp;LLC 2022</a>
       </div></footer>
     <script>
+      function deleteCompany() {
+        fetch
+      }
       function onchange1(input) {
         document.getElementById('heading').innerText = input.value;
       }

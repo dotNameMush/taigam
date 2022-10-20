@@ -53,9 +53,11 @@ app.use(cookieParser());
 app.use(csrfMiddleware);
 
 app.use(function (req, res, next) {
+  var socials = JSON.parse(fs.readFileSync('./public/socials.json'));
     var token = req.csrfToken();
     res.cookie("XSRF-TOKEN", token);
     res.locals.csrfToken = token;
+    res.locals.socials = socials;
     next();
   });
 //public routes
@@ -70,7 +72,8 @@ app.get('/company', (req, res) => {
   res.render('client/Бизнес', {items})
 })
 app.get('/about', (req, res) => {
-  res.status(200).render('client/Бидний-Тухай');
+  var data = JSON.parse(fs.readFileSync('./public/about.json'));
+  res.status(200).render('client/Бидний-Тухай', {data});
 });
 app.get('/sales', async (req, res) => {
   const product = firestore.collection('products').orderBy('timestamp');
@@ -253,14 +256,14 @@ app.post('/admin/sales/update-text', async (req, res) => {
   const sessionCookie = req.cookies.session || "";
   const ref = firestore.collection('products').doc(req.body.id);
   const formData = {
-    name: req.body.name,
-    desc1: req.body.desc1,
-    desc2: req.body.desc2,
-    midTitle: req.body.midTitle,
-    midSubtitle: req.body.midSubtitle,
-    headline: req.body.headline,
-    article: req.body.article,
-    quote: req.body.quote,
+    name: req.body.name.replace(/['"]+/g, ''),
+    desc1: req.body.desc1.replace(/['"]+/g, ''),
+    desc2: req.body.desc2.replace(/['"]+/g, ''),
+    midTitle: req.body.midTitle.replace(/['"]+/g, ''),
+    midSubtitle: req.body.midSubtitle.replace(/['"]+/g, ''),
+    headline: req.body.headline.replace(/['"]+/g, ''),
+    article: req.body.article.replace(/['"]+/g, ''),
+    quote: req.body.quote.replace(/['"]+/g, ''),
   }
 
   admin
@@ -458,16 +461,16 @@ app.post("/sessionLogin", (req, res) => {
     const sessionCookie = req.cookies.session || "";
     const ref = firestore.collection('services');
     const data1 = {
-        title: req.body.title1,
-        subtitle: req.body.subtitle1,
+        title: req.body.title1.replace(/['"]+/g, ''),
+        subtitle: req.body.subtitle1.replace(/['"]+/g, ''),
     }
     const data2 = {
-        title: req.body.title2,
-        subtitle: req.body.subtitle2,
+        title: req.body.title2.replace(/['"]+/g, ''),
+        subtitle: req.body.subtitle2.replace(/['"]+/g, ''),
     }
     const data3 = {
-        title: req.body.title3,
-        subtitle: req.body.subtitle3,
+        title: req.body.title3.replace(/['"]+/g, ''),
+        subtitle: req.body.subtitle3.replace(/['"]+/g, ''),
     }
 
     admin

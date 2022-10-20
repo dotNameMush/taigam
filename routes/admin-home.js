@@ -45,6 +45,20 @@ router.get('/home', async (req, res) => {
       res.redirect("/login");
     });
 });
+router.get('/socials', (req, res) => {
+  var data = JSON.parse(fs.readFileSync('./public/socials.json'));
+  const sessionCookie = req.cookies.session || "";
+  admin
+    .auth()
+    .verifySessionCookie(sessionCookie, true /** checkRevoked */)
+    .then((userData) => {
+      console.log("Logged in:", userData.email)
+      res.render('admin/socials', {data});
+    })
+    .catch((error) => {
+      res.redirect("/login");
+    });
+});
 router.get('/business', (req, res) => {
   var data = JSON.parse(fs.readFileSync('./public/company.json'));
   var items = data.items
@@ -77,8 +91,37 @@ router.get('/business/:id', (req, res) => {
       res.redirect("/login");
     });
 });
+router.get('/about', (req, res) => {
+  const sessionCookie = req.cookies.session || "";
+  var data = JSON.parse(fs.readFileSync('./public/about.json'));
+  admin
+    .auth()
+    .verifySessionCookie(sessionCookie, true /** checkRevoked */)
+    .then((userData) => {
+      console.log("Logged in:", userData.email)
+      res.render('admin/about', {data});
+    })
+    .catch((error) => {
+      console.log(error)
+      res.redirect("/login");
+    });
+});
 
 // Post Methods
+router.post('/socials/save', (req, res) => {
+  var data = JSON.parse(fs.readFileSync('./public/socials.json'));
+  console.log(data);
+  data.facebook = req.body.facebook;
+  data.instagram = req.body.instagram;
+  data.twitter = req.body.twitter;
+  console.log(req.body);
+  fs.writeFile('./public/socials.json', JSON.stringify(data, null, 2), function writeJSON(err) {
+    if (err) return console.log(err);
+    console.log(JSON.stringify(data, null, 2));
+  });
+  res.redirect('/admin/socials');
+
+});
 router.post('/business/:id/save', comapanyUpload.single('image', 1), (req, res) => {
   var data = JSON.parse(fs.readFileSync('./public/company.json'));
   const id = req.params.id;
@@ -103,6 +146,20 @@ router.post('/business/:id/save', comapanyUpload.single('image', 1), (req, res) 
     if (err) return console.log(err);
     console.log(JSON.stringify(data, null, 2));
   });
+  res.redirect('/admin/business');
+
+});
+router.post('/business/:id/delete', (req, res) => {
+  var data = JSON.parse(fs.readFileSync('./public/company.json'));
+  const id = req.params.id;
+  const imgName = data.items[id].img;
+  data.items.splice(id, 1);
+  fs.writeFile('./public/company.json', JSON.stringify(data, null, 2), function writeJSON(err) {
+    if (err) return console.log(err);
+    console.log(JSON.stringify(data, null, 2));
+  });
+  const imagePath = './public/images/companies/' + imgName;
+  fs.unlinkSync(imagePath);
   res.redirect('/admin/business');
 
 });
@@ -171,23 +228,53 @@ router.post('/home/showcase', homeUpload.array('images', 4),(req, res) => {
   });
   router.post('/home/update-text', (req, res) => {
     var data = JSON.parse(fs.readFileSync('./public/home.json'));
-    data.s1h = req.body.s1h;
-    data.s1p = req.body.s1p;
-    data.s2h = req.body.s2h;
-    data.s2p = req.body.s2p;
-    data.service1h = req.body.service1h;
-    data.service2h = req.body.service2h;
-    data.service3h = req.body.service3h;
-    data.service4h = req.body.service4h;
-    data.service1p = req.body.service1p;
-    data.service2p = req.body.service2p;
-    data.service3p = req.body.service3p;
-    data.service4p = req.body.service4p;
-    data.abouth = req.body.abouth;
-    data.aboutp = req.body.aboutp;
-    data.careerh = req.body.careerh;
-    data.careerp = req.body.careerp;
+    data.s1h = req.body.s1h.replace(/['"]+/g, '');
+    data.s1p = req.body.s1p.replace(/['"]+/g, '');
+    data.s2h = req.body.s2h.replace(/['"]+/g, '');
+    data.s2p = req.body.s2p.replace(/['"]+/g, '');
+    data.service1h = req.body.service1h.replace(/['"]+/g, '');
+    data.service2h = req.body.service2h.replace(/['"]+/g, '');
+    data.service3h = req.body.service3h.replace(/['"]+/g, '');
+    data.service4h = req.body.service4h.replace(/['"]+/g, '');
+    data.service1p = req.body.service1p.replace(/['"]+/g, '');
+    data.service2p = req.body.service2p.replace(/['"]+/g, '');
+    data.service3p = req.body.service3p.replace(/['"]+/g, '');
+    data.service4p = req.body.service4p.replace(/['"]+/g, '');
+    data.abouth = req.body.abouth.replace(/['"]+/g, '');
+    data.aboutp = req.body.aboutp.replace(/['"]+/g, '');
+    data.careerh = req.body.careerh.replace(/['"]+/g, '');
+    data.careerp = req.body.careerp.replace(/['"]+/g, '');
     fs.writeFile('./public/home.json', JSON.stringify(data, null, 2), function writeJSON(err) {
+        if (err) return console.log(err);
+        console.log(JSON.stringify(data, null, 2));
+    });
+    res.sendStatus(201);
+  });
+  router.post('/about/update-text', (req, res) => {
+    var data = JSON.parse(fs.readFileSync('./public/about.json'));
+    var s1h =  req.body.s1h
+    var s1p1 = req.body.s1p1
+    var s1p2 = req.body.s1p2
+    var s2h = req.body.s2h
+    var s2p1 = req.body.s2p1
+    var s2p2 = req.body.s2p2
+    var s2p3 = req.body.s2p3
+    s1h.replace(/['"]+/g, '');
+    s1p1.replace(/['"]+/g, '');
+    s1p2.replace(/['"]+/g, '');
+    s2h.replace(/['"]+/g, '');
+    s2p1.replace(/['"]+/g, '');
+    s2p2.replace(/['"]+/g, '');
+    s2p3.replace(/['"]+/g, '');
+    data.s1h = s1h;
+    data.s1p1 = s1p1;
+    data.s1p2 = s1p2;
+    data.s2h = s2h;
+    data.s2p1 = s2p1;
+    data.s2p2 = s2p2;
+    data.s2p3 = s2p3;
+
+    fs.writeFile('./public/about.json', JSON.stringify(data, null, 2), function writeJSON(err) {
         if (err) return console.log(err);
         console.log(JSON.stringify(data, null, 2));
     });
